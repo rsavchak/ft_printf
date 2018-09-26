@@ -1,3 +1,4 @@
+#include "libft.h"
 #include "ft_printf.h"
 
 char *ft_parsing(const char **format, va_list ap, int *res)

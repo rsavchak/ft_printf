@@ -1,3 +1,4 @@
+#include "libft.h"
 #include "ft_printf.h"
 
 char *ft_print_s(va_list ap, t_form type, int *res)

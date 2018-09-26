@@ -1,3 +1,4 @@
+#include "libft.h"
 #include "ft_printf.h"
 
 char* ft_add_space(char *src,int len, int nbrSpace, t_form *type)
