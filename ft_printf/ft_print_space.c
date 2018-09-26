@@ -2,16 +2,29 @@
 
 char* ft_add_space(char *src,int len, int nbrSpace, t_form *type)
 {
-	char *str = NULL;
+	// char *str = NULL;
+	// char *space = NULL;
+
+	// space = ft_memalloc (nbrSpace + 1);
+	// ft_memset(space, ' ', nbrSpace);
+	// str = ft_memalloc(len + 1);
+	// if (type->minus)
+	// 	str = ft_strcat(src,space);
+	// else
+	// 	str = ft_strcat(space, src);
+	// free(space);
+	// return(str);
+		char *str = NULL;
 	char *space = NULL;
 
 	space = ft_memalloc (nbrSpace + 1);
 	ft_memset(space, ' ', nbrSpace);
-	str = ft_memalloc(len + 1);
+	//str = ft_memalloc(len + 1);
 	if (type->minus)
-		str = ft_strcat(src,space);
+		str = ft_conncat(src, space, ft_strlen(src), len);
+
 	else
-		str = ft_strcat(space, src);
+		str = ft_conncat(space, src, nbrSpace , len);
 	free(space);
 	return(str);
 }
@@ -48,7 +61,7 @@ char *ft_one_space(char *nbr, int *len)
 {	
 	char *space;
 
-	if (ft_atoi(nbr) > 0)
+	if (ft_atoi(nbr) != 0 && nbr[0] != '-')
 	{
 		space = ft_memalloc(*len + 2);
 		space[0] = ' ';
@@ -73,6 +86,7 @@ char *ft_add_sharp(char *num, int *len, t_form type)
 		sharp = ft_memalloc(i + 2);
 		sharp = ft_strcat(ft_strdup("0"), num);
 		*len = *len + 1;
+		free(num);
 		return (sharp);	
 	}
 	if (type.conv == 'p' || (type.hash &&  ft_atoi(num) != 0))
@@ -82,7 +96,7 @@ char *ft_add_sharp(char *num, int *len, t_form type)
 		sharp = ft_memalloc(i + 3);
 		sharp = ft_strcat(ft_strdup("0x"), num);
 		*len = *len + 2;
-		//free(num);
+		free(num);
 		return (sharp);
 	}
 	return (num);
@@ -92,7 +106,7 @@ char *ft_add_plus(char *nbr, int *len, t_form type)
 {	
 	char *plus;
 
-	if (ft_atoi(nbr) >= 0 && type.conv != 'o' && type.conv != 'O')
+	if (nbr[0] != '-' && type.conv != 'o' && type.conv != 'O')
 	{
 		plus = ft_memalloc(*len + 2);
 		plus[0] = '+';
@@ -102,4 +116,22 @@ char *ft_add_plus(char *nbr, int *len, t_form type)
 		return(plus);
 	}
 	return(nbr);
+}
+
+char	*ft_conncat(char *res, char *src, size_t l1, size_t l2)
+{
+	char	*str;
+	size_t	size;
+
+	size = l1 + l2;
+	str = ft_strnew(size);
+	if (!str)
+		return (NULL);
+	if (res)
+	{
+		ft_strncpy(str, res, l1);
+		//free(res);
+	}
+	ft_strncpy(str + l1, src, l2);
+	return (str);
 }

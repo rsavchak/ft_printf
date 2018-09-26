@@ -21,7 +21,7 @@ char *ft_print_s(va_list ap, t_form type, int *res)
 	}
 	string = (va_arg(ap, char *));
 	if (!string)
-		return("(null)");
+		string = ft_strdup("(null)");
 	len = ft_strlen(string);
 	if (type.prec && type.prec < len)
 	{

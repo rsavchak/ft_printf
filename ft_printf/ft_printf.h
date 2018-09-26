@@ -54,6 +54,7 @@ char  *ft_check_mod(char *mod, int *i, int k);
 char *ft_flags_p(char *nbr, t_form type);
 void ft_prints_prec(wchar_t* string, t_form type, int *res);
 void ft_pars_mod(int *i, char *mod, t_form *type);
+char	*ft_conncat(char *res, char *src, size_t l1, size_t l2);
 
 
 char *ft_print_r(t_form type, char *mod, int *res);

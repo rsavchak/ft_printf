@@ -71,8 +71,9 @@ char *ft_modificator(const char *format, int *k)
 	char *mod = NULL;
 	const char *type = "sSpdDioOuUxXcC%";
 	int i;
-	int j = 0;
+	int j;
 
+	j = 0;
 	while(format[j] != '\0')
 	{
 		i = 0;
