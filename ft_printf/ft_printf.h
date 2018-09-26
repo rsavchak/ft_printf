@@ -3,6 +3,7 @@
 #include <unistd.h>
 # include <wchar.h>
 # include "libft.h"
+#include <stdarg.h>
 
 typedef struct s_form
 {
