@@ -15,11 +15,11 @@ char *ft_print_c(va_list ap, t_form type, int *res)
 	char *str = NULL;
 	char c;
 
-	if ((ft_strchr(type.size, 'l') || type.conv == 'C'))
-	{
-		str = ft_printC(ap, type, res);
-		return(str);
-	}
+	// if ((ft_strchr(type.size, 'l') || type.conv == 'C'))
+	// {
+	// 	str = ft_printC(ap, type, res);
+	// 	return(str);
+	// }
 	c = (char)va_arg(ap, int);
 	if (c)
 	{
