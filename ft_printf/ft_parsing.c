@@ -1,38 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parsing.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rsavchak <rsavchak@student.unit.ua>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/01 17:39:57 by rsavchak          #+#    #+#             */
+/*   Updated: 2018/10/01 17:39:58 by rsavchak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "ft_printf.h"
 
-char *ft_parsing(const char **format, va_list ap, int *res)
+int		ft_parsing(const char **format, va_list ap, int *res)
 {
-	int i;
-	i = 0;
-	t_form type;
-	char *str = NULL; 
-	char *mod = NULL;
-	int k = 0;
+	int		i;
+	int		resstr;
+	char	*mod;
+	char	*z;
+	t_form	type;
 
-	mod = ft_modificator(*format, &k);
-	mod = ft_check_mod(mod, &i, k);
-	if (!mod || *mod == 0)
+	i = 0;
+	resstr = 0;
+	mod = ft_modificator(*format, &resstr);
+	if (ft_check_mod(mod, &i, resstr) == 0)
 	{
 		*format = *format + i;
-		return (NULL);
+		return (0);
 	}
 	*format = *format + ft_strlen(mod);
 	ft_clear_form(&type);
 	ft_pars_mod(&i, mod, &type);
+	z = mod;
 	mod = mod + i;
 	ft_check_conv(&type, mod);
-	str = ft_chose_type(type, ap, res, mod);
-	return (str);
+	resstr = ft_chose_type(type, ap, res, mod);
+	free(z);
+	if (type.size != 0)
+		free(type.size);
+	return (resstr);
 }
 
-void ft_pars_mod(int *i, char *mod, t_form *type)
+void	ft_pars_mod(int *i, char *mod, t_form *type)
 {
-	int k = 0;
-	int check = 0;
+	int	k;
+	int	check;
 
-	while(mod[*i] != '\0')
-	{	check = *i;
+	k = 0;
+	check = 0;
+	while (mod[*i] != '\0')
+	{
+		check = *i;
 		k = ft_check_flags(mod + *i, type);
 		*i = *i + k;
 		k = ft_check_width(mod + *i, type);
@@ -42,54 +61,69 @@ void ft_pars_mod(int *i, char *mod, t_form *type)
 		k = ft_check_size(mod + *i, type);
 		*i = *i + k;
 		if (check == *i)
-			break;
+			break ;
 	}
 }
 
-char  *ft_check_mod(char *mod, int *i, int k)
+int		ft_check_mod(char *mod, int *i, int k)
 {
-
-	const char *formatstr = "sSpdDioOuUxXcC%0123456789.+-0 #hjlz";
+	const char	*formatstr = "sSpdDioOuUxXcC%0123456789.+-0 #hjlz";
 
 	if (mod != NULL)
 	{
-		while(mod[*i])
+		while (mod[*i])
 		{
 			if (!ft_strchr(formatstr, mod[*i]) && k == 1)
 			{
 				mod = NULL;
-				return(mod);
-			}		
-			*i = *i + 1;	
+				break ;
+			}
+			*i = *i + 1;
 		}
+		if (!mod || *mod == 0)
+			return (0);
 	}
 	*i = 0;
-	return (mod);
+	return (1);
 }
 
-char *ft_modificator(const char *format, int *k)
+char	*ft_modificator(const char *format, int *k)
 {
-	char *mod = NULL;
-	const char *type = "sSpdDioOuUxXcC%";
-	int i;
-	int j;
+	char		*mod;
+	const char	*type = "sSpdDioOuUxXcC%";
+	int			i;
+	int			j;
 
+	mod = NULL;
 	j = 0;
-	while(format[j] != '\0')
+	while (format[j] != '\0')
 	{
 		i = 0;
-		while(type[i])
+		while (type[i])
 		{
-			if(format[j] == type[i])
+			if (format[j] == type[i])
 			{
-				*k = 1;	
+				*k = 1;
 				mod = ft_strsub(format, 0, j + 1);
-				return(mod);
+				return (mod);
 			}
 			i++;
 		}
 		j++;
 	}
 	mod = ft_strsub(format, 0, j + 1);
-	return(mod);
+	return (mod);
+}
+
+void	ft_clear_form(t_form *type)
+{
+	type->minus = 0;
+	type->plus = 0;
+	type->zero = 0;
+	type->space = 0;
+	type->prec = 0;
+	type->hash = 0;
+	type->width = 0;
+	type->conv = 0;
+	type->size = NULL;
 }

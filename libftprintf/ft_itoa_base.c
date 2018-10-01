@@ -36,7 +36,10 @@ char	*ft_itoa_base(unsigned long long int value, int base)
 	const char				*base_string = "0123456789abcdef";
 
 	if (value == 0)
-		return ("0");
+	{
+		str = ft_strdup("0");
+		return (str);
+	}
 	len = 0;
 	nbr = ft_len_and_sign(value, &len, base);
 	if (!(str = (char *)malloc(sizeof(char) * len + 1)))

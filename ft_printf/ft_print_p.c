@@ -1,29 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_p.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rsavchak <rsavchak@student.unit.ua>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/01 17:42:05 by rsavchak          #+#    #+#             */
+/*   Updated: 2018/10/01 17:42:06 by rsavchak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "ft_printf.h"
 
-char *ft_print_p(va_list ap, t_form type)
+int	ft_print_p(va_list ap, t_form type)
 {
-	char *str = NULL;
-	long long p;
+	char		*str;
+	long long	p;
+	int			res;
 
-	p =  va_arg(ap, long long);
+	str = NULL;
+	res = 0;
+	p = va_arg(ap, long long);
 	str = ft_itoa_base(p, 16);
-	str = ft_flags_p(str, type);
-	return(str);
-}
-
-char	*ft_big(char *str)
-{
-	int i;
-	char *s;
-
-	i = 0;
-	s = ft_memalloc(ft_strlen(str) + 1);
-	while (str[i] != '\0')
-	{
-		s[i] = ft_toupper(str[i]);
-		i++;
-	}
-	//free(str);
-	return (s);	
+	res = ft_flags_p(str, type);
+	return (res);
 }

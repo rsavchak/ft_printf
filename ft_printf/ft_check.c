@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_check.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rsavchak <rsavchak@student.unit.ua>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/29 18:47:51 by rsavchak          #+#    #+#             */
+/*   Updated: 2018/09/29 18:47:54 by rsavchak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "ft_printf.h"
 
-int ft_check_width(char *mod, t_form *type)
+int	ft_check_width(char *mod, t_form *type)
 {
-	int i = 0;
-	
+	int i;
+
+	i = 0;
 	if (ft_isdigit(mod[i]))
 	{
 		type->width = ft_atoi(mod);
@@ -14,11 +27,12 @@ int ft_check_width(char *mod, t_form *type)
 	return (i);
 }
 
-int ft_check_precision(char *mod, t_form *type)
+int	ft_check_precision(char *mod, t_form *type)
 {
-	int i = 0;
+	int i;
 
-	if(mod[i] == '.')
+	i = 0;
+	if (mod[i] == '.')
 	{
 		mod = mod + 1;
 		type->prec = ft_atoi(mod);
@@ -31,42 +45,17 @@ int ft_check_precision(char *mod, t_form *type)
 	return (i);
 }
 
-void ft_check_conv(t_form *type, char *mod)
+int	ft_check_size(char *mod, t_form *type)
 {
-	char *convers = "sSpdDioOuUxXcC%";
-	int k = 0;
-	int i = 0;
+	const char	*sizes = "hljz";
+	char		size[3];
+	int			j;
 
-	while(convers[k] != '\0')
+	j = 0;
+	while (*mod)
 	{
-		i = 0;
-		while(mod[i] != '\0')
+		if (ft_strchr(sizes, *mod))
 		{
-			if (mod[i] == convers[k])
-			{
-				type->conv = convers[k];
-				break;
-			}
-			i++;
-		}
-		k++;
-	}
-	if (!type->conv)
-		type->conv = 'r';
-	if ((type->prec || type->minus) && type->conv != 's' && type->conv != 'S' && type->conv != 'c' && type->conv != '%' && type->conv != 'r')
-		type->zero = 0;
-}
-
-int ft_check_size(char *mod, t_form *type)
-{
-	char *sizes = "hljz";
-	char size[3];
-	int j = 0;
-
-	while(*mod)
-	{
-		if(ft_strchr(sizes, *mod))
-		{	
 			size[j] = *mod;
 			j++;
 		}
@@ -75,5 +64,5 @@ int ft_check_size(char *mod, t_form *type)
 	size[j] = '\0';
 	if (type->size == NULL)
 		type->size = ft_strdup(size);
-	return(j);
+	return (j);
 }

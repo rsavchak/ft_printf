@@ -1,38 +1,54 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_choose_type.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rsavchak <rsavchak@student.unit.ua>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/01 17:02:18 by rsavchak          #+#    #+#             */
+/*   Updated: 2018/10/01 17:02:20 by rsavchak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "ft_printf.h"
 
-char *ft_chose_type(t_form type, va_list ap, int *res, char *mod)
+int		ft_chose_type(t_form type, va_list ap, int *res, char *mod)
 {
-	char *str;
+	int	resstr;
 
-	if (type.conv == 's' || type.conv == 'S')
-		str = ft_print_s(ap, type, res);
-	if (type.conv == 'p')
-		str = ft_print_p(ap, type);
-	if (type.conv == 'c' || type.conv == 'C')
-		str = ft_print_c(ap, type, res);
-	if (type.conv == 'd' || type.conv == 'D' || type.conv == 'i')
-		str = ft_print_d(ap, type);	
-	if (type.conv == 'u' || type.conv == 'U')
-		str = ft_print_u(ap, type);
-	if (type.conv == 'o' || type.conv == 'O')
-		str = ft_print_o(ap, type);
-	if (type.conv == 'x' || type.conv == 'X')
-		str = ft_print_x(ap, type);
-	if (type.conv == '%')
-		str = ft_print_percent(ap, type);
-	if (type.conv == 'r')
-		str = ft_print_r(type, mod, res);
-
-	return(str);
+	resstr = 0;
+	if (type.conv == 'S' || (type.conv == 's' && ft_strchr(type.size, 'l')))
+		ft_print_ls(ap, type, res);
+	else if (type.conv == 's')
+		ft_print_s(ap, type, res);
+	else if (type.conv == 'p')
+		resstr = ft_print_p(ap, type);
+	else if (type.conv == 'c' || type.conv == 'C')
+		ft_print_c(ap, type, res);
+	else if (type.conv == 'd' || type.conv == 'D' || type.conv == 'i')
+		resstr = ft_print_d(ap, type);
+	else if (type.conv == 'u' || type.conv == 'U')
+		resstr = ft_print_u(ap, type);
+	else if (type.conv == 'o' || type.conv == 'O')
+		resstr = ft_print_o(ap, type);
+	else if (type.conv == 'x' || type.conv == 'X')
+		resstr = ft_print_x(ap, type);
+	else if (type.conv == '%')
+		resstr = ft_print_percent(ap, type);
+	else if (type.conv == 'r')
+		ft_print_r(type, mod, res);
+	return (resstr);
 }
 
-char *ft_print_r(t_form type, char *mod, int *res)
+void	ft_print_r(t_form type, char *mod, int *res)
 {
-	char *str = NULL;
-	int i = 0;
-	
-	if (type. width)
+	char	*str;
+	int		i;
+
+	str = NULL;
+	i = 0;
+	if (type.width)
 	{
 		str = ft_memalloc(type.width);
 		if (type.zero)
@@ -40,7 +56,20 @@ char *ft_print_r(t_form type, char *mod, int *res)
 		else
 			ft_memset(str, ' ', type.width - 1);
 	}
-	if (!type.minus) 
+	mod = ft_print_r_minus(type, str, mod, res);
+	if (str)
+		while (str[i++] != '\0')
+			*res = *res + 1;
+	i = 0;
+	while (mod[i++] != '\0')
+		*res = *res + 1;
+	if (type.width)
+		free(str);
+}
+
+char	*ft_print_r_minus(t_form type, char *str, char *mod, int *res)
+{
+	if (!type.minus)
 	{
 		ft_putstr(str);
 		ft_putstr(mod);
@@ -53,13 +82,5 @@ char *ft_print_r(t_form type, char *mod, int *res)
 		ft_putstr(mod);
 		*res = *res + 1;
 	}
-	if (str)
-		while(str[i++] != '\0')
-			*res = *res + 1;
-	i = 0;
-	while (mod[i++] != '\0')
-		*res = *res + 1;
-	//free(mod);
-	str = "";
-	return (str);
+	return (mod);
 }
