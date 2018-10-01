@@ -73,17 +73,17 @@ char	*ft_add_plus(char *nbr, int *len, t_form type)
 	return (nbr);
 }
 
-char	*ft_conncat(char *res, char *src, size_t l1, size_t l2)
+char	*ft_str_add(char *res, char *src, size_t len1, size_t len2)
 {
 	char	*str;
 	size_t	size;
 
-	size = l1 + l2;
+	size = len1 + len2;
 	str = ft_strnew(size);
 	if (!str)
 		return (NULL);
 	if (res)
-		ft_strncpy(str, res, l1);
-	ft_strncpy(str + l1, src, l2);
+		ft_strncpy(str, res, len1);
+	ft_strncpy(str + len1, src, len2);
 	return (str);
 }

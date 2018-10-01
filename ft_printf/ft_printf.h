@@ -74,7 +74,7 @@ char			*ft_big(char *str);
 char			*ft_add_sharp(char *num, int *len, t_form type);
 char			*ft_one_space(char *nbr, int *len);
 char			*ft_precision(char *num, char *nbr, t_form type, int *len);
-char			*ft_conncat(char *res, char *src, size_t l1, size_t l2);
+char			*ft_str_add(char *res, char *src, size_t len1, size_t len2);
 char			*ft_flags_add(t_form type, char *num, char *nbr);
 char			*ft_flags_add_p(t_form type, char *nbr, char *num, int *len);
 char			*ft_flags_add_x(t_form type, char *nbr, char *num, int *len);

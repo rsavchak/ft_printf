@@ -25,9 +25,9 @@ char	*ft_add_space(char *src, int len, int nbrspace, t_form *type)
 	ft_memset(space, ' ', nbrspace);
 	z = src;
 	if (type->minus)
-		str = ft_conncat(src, space, ft_strlen(src), len);
+		str = ft_str_add(src, space, ft_strlen(src), len);
 	else
-		str = ft_conncat(space, src, nbrspace, len);
+		str = ft_str_add(space, src, nbrspace, len);
 	if (type->conv != 's')
 		free(z);
 	free(space);
@@ -64,7 +64,7 @@ char	*ft_add_zero(char *src, char *str, int nbrspace, int len)
 	else
 	{
 		ft_memset(zero, '0', nbrspace);
-		str = ft_conncat(zero, src, nbrspace, len);
+		str = ft_str_add(zero, src, nbrspace, len);
 	}
 	free(z);
 	free(zero);

@@ -77,6 +77,7 @@ int		ft_flags_p(char *nbr, t_form type)
 	len = ft_strlen(num);
 	num = ft_flags_add_p(type, nbr, num, &len);
 	num = ft_add_sharp(num, &len, type);
+	len = ft_strlen(num);
 	if (type.width && type.width > len)
 		num = ft_add_space_or_zero(num, type.width, type.width - len, type);
 	ft_putstr(num);
