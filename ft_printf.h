@@ -13,10 +13,9 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include <unistd.h>
-# include "libft.h"
 # include <wchar.h>
 # include <stdarg.h>
-# include "libft.h"
+# include "libft/libft.h"
 
 typedef struct	s_form
 {
@@ -31,7 +30,7 @@ typedef struct	s_form
 	char		*size;
 }				t_form;
 
-int				ft_ptintf(const char *format, ...);
+int				ft_printf(const char *format, ...);
 int				vprint(const char *format, va_list ap, int total, int i);
 int				ft_parsing(const char **format, va_list ap, int *res);
 int				ft_chose_type(t_form type, va_list ap, int *res, char *mod);

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_printf.h"
 
 char	*ft_add_space(char *src, int len, int nbrspace, t_form *type)

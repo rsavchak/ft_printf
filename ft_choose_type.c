@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_printf.h"
 
 int		ft_chose_type(t_form type, va_list ap, int *res, char *mod)
