@@ -33,7 +33,7 @@ void	ft_print_c(va_list ap, t_form type, int *res)
 	o = ' ';
 	if (type.zero)
 		o = '0';
-	if ((ft_strchr(type.size, 'l') || type.conv == 'C'))
+	if ((ft_strchr(type.size, 'l') || type.conv == 'C') && MB_CUR_MAX > 1)
 	{
 		ft_print_lc(ap, type, res);
 		return ;
